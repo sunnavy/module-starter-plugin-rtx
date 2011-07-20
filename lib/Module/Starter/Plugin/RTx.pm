@@ -179,9 +179,7 @@ Module::Starter::Plugin::RTx - Module::Starter for RT extensions
 
 =head1 SYNOPSIS
 
-    use Module::Starter
-      qw( Module::Starter::Simple Module::Starter::Plugin::RTx);
-
+    use Module::Starter 'Module::Starter::Plugin::RTx';
     Module::Starter->create_distro(%args);
 
 =head1 DESCRIPTION
