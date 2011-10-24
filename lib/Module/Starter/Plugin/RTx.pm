@@ -10,14 +10,14 @@ sub create_MI_RTx_Makefile_PL {
     my $self        = shift;
     my $main_module = shift || $self->{main_module};
     my $fname       = File::Spec->catfile( $self->{basedir}, 'Makefile.PL' );
-    my $main_module_file = join( '/', 'lib', split /::/, $main_module ) . '.pm';
+    $self->{main_module_file} = join( '/', 'lib', split /::/, $main_module ) . '.pm';
 
     $self->create_file(
         $fname,
         <<EOF
 use inc::Module::Install;
 RTx('$self->{distro}');
-all_from('$main_module_file');
+all_from('$self->{main_module_file}');
 &WriteAll;
 EOF
     );
@@ -102,7 +102,7 @@ sub create_distro {
     $self->create_ignores;
     my %build_results = $self->create_build();
     $self->create_Changes;
-    $self->create_README( $build_results{instructions} );
+    $self->create_README;
 
     $self->create_MANIFEST( $build_results{'manifest_method'} );
 
@@ -112,10 +112,8 @@ sub create_distro {
 
 sub create_README {
     my $self = shift;
-    my $main_module_file =
-      join( '/', 'lib', split /::/, $self->{main_module} ) . '.pm';
-    chdir $self->{distro};
-    symlink( $main_module_file, 'README.pod' );
+    chdir $self->{basedir};
+    symlink( $self->{main_module_file}, 'README.pod' );
     chdir '..';
 }
 
