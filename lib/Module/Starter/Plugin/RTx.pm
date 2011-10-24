@@ -98,14 +98,11 @@ sub create_distro {
     $self->{basedir} = $self->{dir} || $self->{distro};
     $self->create_basedir;
 
-    my @files;
-    push @files, $self->create_modules(@modules);
-    push @files, $self->create_ignores;
+    $self->create_modules(@modules);
+    $self->create_ignores;
     my %build_results = $self->create_build();
-    push( @files, @{ $build_results{files} } );
-
-    push @files, $self->create_Changes;
-    push @files, $self->create_README( $build_results{instructions} );
+    $self->create_Changes;
+    $self->create_README( $build_results{instructions} );
 
     $self->create_MANIFEST( $build_results{'manifest_method'} );
 
