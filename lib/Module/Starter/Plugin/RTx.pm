@@ -110,6 +110,16 @@ sub create_distro {
     $self->create_MANIFEST( $build_results{'manifest_method'} );
 
     return;
+
+}
+
+sub create_README {
+    my $self = shift;
+    my $main_module_file =
+      join( '/', 'lib', split /::/, $self->{main_module} ) . '.pm';
+    chdir $self->{distro};
+    symlink( $main_module_file, 'README.pod' );
+    chdir '..';
 }
 
 sub _module_header {
