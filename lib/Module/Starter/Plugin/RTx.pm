@@ -4,7 +4,7 @@ use warnings;
 package Module::Starter::Plugin::RTx;
 use base 'Module::Starter::Simple';
 use Carp;
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 sub create_MI_RTx_Makefile_PL {
     my $self        = shift;
